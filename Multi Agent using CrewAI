@@ -1,0 +1,43 @@
+import os 
+os.environ['SERPER_API_KEY'] = API_key   ###API key to be pasted here
+
+from crewai_tools import SerperDevTool
+from crewai import LLM
+
+#tool initaiation
+search_tool=SerperDevTool()
+print(type(search_tool))
+
+#search test for serpertool 
+search_query = "Latest Breakthroughs in machine learning"
+search_results =search_tool.run(query=search_query )
+
+# Print the results
+print(f"Search Results for '{search_results}':\n")
+
+# inspect keys of serper keys
+print("keys of search_results", search_results.keys())
+
+
+
+llm = LLM(
+        model="watsonx/meta-llama/llama-3-3-70b-instruct",
+        base_url="https://us-south.ml.cloud.ibm.com",
+        project_id="skills-network",
+        max_tokens=2000,
+)
+
+
+from crewai import Agent
+
+research_agent = Agent(
+  role='Senior Research Analyst',
+  goal='Uncover cutting-edge information and insights on any subject with comprehensive analysis',
+  backstory="""You are an expert researcher with extensive experience in gathering, analyzing, and synthesizing information across multiple domains. 
+  Your analytical skills allow you to quickly identify key trends, separate fact from opinion, and produce insightful reports on any topic. 
+  You excel at finding reliable sources and extracting valuable information efficiently.""",
+  verbose=True,
+  allow_delegation=False,
+  llm = llm,
+  tools=[SerperDevTool()]
+)

@@ -21,11 +21,12 @@ cd your-repo-name
 # Install UV
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 set Path=C:\Users\Codem\.local\bin;%Path%
-```
+
 #setup uv and venev
 uv init 
 uv add -r requirements.txt
 
+```
 
 ## 🎮 Usage
 Provide an example of how to use your project. Include code snippets or command-line examples.
